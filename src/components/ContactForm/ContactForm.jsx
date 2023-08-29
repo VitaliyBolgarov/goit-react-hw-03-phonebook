@@ -13,16 +13,14 @@ import {
 } from './ContactForm.styled';
 
 const SignupSchema = Yup.object().shape({
-  name: Yup
-    .string()
+  name: Yup.string()
     .trim()
     .matches(
       /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
       'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d`Artagnan'
     )
     .required(),
-  number: Yup
-    .string()
+  number: Yup.string()
     .trim()
     .matches(
       /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
@@ -31,7 +29,7 @@ const SignupSchema = Yup.object().shape({
     .required(),
 });
 
-export const ContactForm = ({ onAddContact }) => {
+export const ContactForm = ({ onAddContact, onReset }) => {
   return (
     <Formik
       initialValues={{
@@ -46,9 +44,7 @@ export const ContactForm = ({ onAddContact }) => {
     >
       <Form autoComplete="off">
         <FormField htmlFor="name">
-          <LabelWrapper>
-            Name
-          </LabelWrapper>
+          <LabelWrapper>Name</LabelWrapper>
           <FieldFormik
             type="text"
             name="name"
@@ -59,9 +55,7 @@ export const ContactForm = ({ onAddContact }) => {
           <ErrorMessage name="name" component="span" />
         </FormField>
         <FormField htmlFor="number">
-          <LabelWrapper>
-             Number
-          </LabelWrapper>
+          <LabelWrapper>Number</LabelWrapper>
           <FieldFormik
             type="tel"
             name="number"
@@ -71,9 +65,8 @@ export const ContactForm = ({ onAddContact }) => {
           />
           <ErrorMessage name="number" component="span" />
         </FormField>
-        <StyledButton type="submit">
-          Add contact
-        </StyledButton>
+        <StyledButton type="submit">Add contact</StyledButton>
+        {/* <button onClick={onReset}>Reset</button> */}
       </Form>
     </Formik>
   );

@@ -27,6 +27,24 @@ export default class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('phone-contacts');
+    if (savedContacts !== null) {
+      this.setState({
+        contacts: JSON.parse(savedContacts),
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(
+        'phone-contacts',
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  }
+
   addContact = newContact => {
     this.state.contacts.filter(
       contact =>
@@ -41,6 +59,12 @@ export default class App extends Component {
           };
         });
   };
+
+  // resetContacts = () => {
+  //   this.setState({
+  //     contacts: initialContacts,
+  //   });
+  // };
 
   deleteContact = contactId => {
     this.setState(prevState => {
@@ -76,6 +100,7 @@ export default class App extends Component {
           <ContactList
             contacts={visibleContacts}
             onDelete={this.deleteContact}
+            onReset={this.resetContacts}
           />
         </Section>
         <ToastContainer />
